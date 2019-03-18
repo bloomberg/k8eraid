@@ -1,0 +1,5 @@
+ARG IMAGE
+ARG TAG
+FROM $IMAGE:$TAG
+COPY ./build/k8eraid /k8eraid
+ENTRYPOINT /k8eraid

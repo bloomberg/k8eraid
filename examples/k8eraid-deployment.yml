@@ -1,0 +1,35 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8eraid
+  labels:
+    app: k8eraid
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: k8eraid
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: k8eraid
+        app: k8eraid
+    spec:
+      serviceAccountName: k8eraid
+      containers:
+        - name: k8eraid
+          command: ['/k8eraid']
+          image: artifactory.inf.bloomberg.com/kubernetesinfrastructure/k8eraid:latest
+          imagePullPolicy: Always
+          env:
+          - name: POLL_PERIOD
+            value: "30"
+          - name: CONFIG_MAP
+            value: "k8eraid-config"

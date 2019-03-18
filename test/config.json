@@ -1,0 +1,86 @@
+{
+	"deployments": [
+		{
+			"name": "kube-dns",
+			"filter": "kube-system",
+			"alerterType": "stderr",
+			"reportStatus": {
+				"minReplicas": 1,
+				"pendingThreshold": 1
+			}
+		}
+	],
+	"pods": [
+		{
+			"name": "*",
+			"filterNamespace": "kube-system",
+			"filterLabel": "",
+			"alerterType": "smtp",
+			"alerterName": "example-email",
+			"reportStatus": {
+				"minPods": 1,
+				"podRestarts": true,
+				"failedScheduling": true,
+				"stuckTerminating": true,
+				"pendingThreshold": 1
+			}
+		}
+	],
+	"daemonsets": [
+		{
+			"name": "nginx-ingress-controller",
+			"filter": "kube-system",
+			"alerterType": "smtp",
+			"alerterName": "example-email",
+			"reportStatus": {
+				"checkReplicas": true,
+				"failedScheduling": true,
+				"pendingThreshold": 1
+			}
+		}
+	],
+	"nodes": [
+		{
+			"name": "*",
+			"filter": null,
+			"alerterType": "smtp",
+			"alerterName": "example-email",
+			"reportStatus": {
+				"pendingThreshold": 60,
+				"minNodes": 3,
+				"outOfDisk": true,
+				"memoryPressure": true,
+				"diskPressure": true,
+				"readiness": true
+			}
+		}
+	],
+	"alerters": {
+		"smtp": [
+			{
+				"name": "example-email",
+				"toAddress": "kubernetes@example.net",
+				"fromAddress": "kubernetes@example.net",
+				"mailServer": "smtp.example.com",
+				"port": 25,
+				"subject": "Test smtp alerter alert from k8eraid"
+			}
+		],
+		"webhook": [
+			{
+				"name": "example-webhook",
+				"server": "http://www.example.com",
+				"subject": "Test webhook alerter alert from k8eraid",
+				"proxyServer": ""
+			}
+		],
+		"pagerdutyV2": [
+			{
+				"name": "example-pagerduty",
+				"serviceKeyEnvVar": "MYPDKEY",
+				"proxyServer": "http://someproxy.example.com",
+				"subject": "Test Pagerduty Alerter alert from k8eraid"
+			}
+		]
+	}
+}
