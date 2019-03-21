@@ -48,7 +48,7 @@ container:
 	# Run the build in a container in order to have reproducible builds
 	$(DOCKER_RUN) make build/k8eraid
 	docker build . --pull -t $(DOCKER_IMAGE):$(APPVERSION) -t $(DOCKER_IMAGE):latest --build-arg IMAGE=$(SCRATCH_IMAGE) --build-arg TAG=$(SCRATCH_TAG)
-	docker build . -f Dockerfile.vendor -t $(DOCKER_IMAGE):$(APPVERSION)-vendor -t $(DOCKER_IMAGE):latest-vendor --build-arg IMAGE=$(SCRATCH_IMAGE) --build-arg=$(SCRATCH_TAG)
+	docker build . -f Dockerfile.vendor -t $(DOCKER_IMAGE):$(APPVERSION)-vendor -t $(DOCKER_IMAGE):latest-vendor --build-arg IMAGE=$(SCRATCH_IMAGE) --build-arg TAG=$(SCRATCH_TAG)
 
 pushcontainer:
 	docker push $(DOCKER_IMAGE):$(APPVERSION)
