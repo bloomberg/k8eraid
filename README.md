@@ -1,7 +1,7 @@
 # k8eraid
 (KAY-ter-ade)
 
-[![Travis](https://img.shields.io/travis/bloomberg/k8eraid.svg)](https://travis-ci.com/bloomberg/k8eraid)
+[![Travis](https://api.travis-ci.com/bloomberg/k8eraid.svg?branch=master)](https://travis-ci.com/bloomberg/k8eraid)
 
 ## What does this do?
 
