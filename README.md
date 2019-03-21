@@ -55,17 +55,15 @@ webhook     | Server, Proxy server, Subject
 docker pull bloomberg/k8eraid
 ```
 
-
-
 ## Awesome! So how does configuration work?
 
 There are five types of objects in a config- "deployments", "pods", "daemonsets", "nodes", and "alerters". Each of these objects contain one or more desired definitions. There are a few important rules that you will need to remember when configuring your rules, most of these are due to the way the kubernetes client functions in `list` vs `get` functions.
 
 - The config is self-reloading. You do not need to redeploy k8eraid when you update the configmap.
-- If using a wildcard for a POD, you MUST specify a valid filterLabel
-- If specifying a name for any target resource, you MUST specify a valid filterNamespace
+- If using a wildcard for a POD, you MUST specify a valid filterLabel.
+- If specifying a name for any target resource, you MUST specify a valid filterNamespace.
 - If your pendingThreshold is too short for a POD rule, you may get alerts for normal pod startups.
-- For DEPLOYMENT and DAEMONSET type resources- "filter" can either be a literal string for a namespace, or a key/value pair string for a metadata label
+- For DEPLOYMENT and DAEMONSET type resources- "filter" can either be a literal string for a namespace, or a key/value pair string for a metadata label.
 
 ### Pod configuration examples
 
