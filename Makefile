@@ -53,8 +53,12 @@ container:
 pushcontainer:
 	docker push $(DOCKER_IMAGE):$(APPVERSION)
 	docker push $(DOCKER_IMAGE):latest
+	docker push $(DOCKER_IMAGE):$(APPVERSION)-vendor
+	docker push $(DOCKER_IMAGE):latest-vendor
 	docker rmi $(DOCKER_IMAGE):$(APPVERSION)
 	docker rmi $(DOCKER_IMAGE):latest
+	docker rmi $(DOCKER_IMAGE):$(APPVERSION)-vendor
+	docker rmi $(DOCKER_IMAGE):latest-vendor
 
 test: clean vendor
 	CGO_ENABLED=1 go test -race -v --cover ./...

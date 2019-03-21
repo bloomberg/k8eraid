@@ -9,3 +9,11 @@ go:
 script:
   - make test
   - make container
+
+deploy:
+  provider: script
+  script: bash docker_deploy.sh
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: -n "$DOCKER_PASSWORD"
