@@ -2,4 +2,5 @@ ARG IMAGE
 ARG TAG
 FROM $IMAGE$TAG
 COPY ./build/k8eraid /k8eraid
+COPY vendor /k8eraid-vendor-sources
 ENTRYPOINT /k8eraid
