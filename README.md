@@ -9,17 +9,17 @@ The point of k8eraid is to provide a relatively simple, unified method for repor
 
 How is this different from metrics based alerters (ie: Prometheus with AlertManager)?
 
-This tool directly integrates with the kubernetes API to look up the actual real state of resources and their changes. That means where metrics based systems are good for looking up a snapshot of status based on specifications (X number of pods running right now), k8eraid can look up the current status as well as see if the status has recently changed by looking at the timestamps for api metadata like deletion times and pod state readiness times. Additionally, the configuration for k8eraid is simple enough that it is easy to expand or remove alerting and monitoring as you see fit.  Not only that but k8eraid is incredibly lightweight, using about 100KB of memory at runtime to look up the status of 100 individual resources, making it a prime, lightweight candidate for allowing multiple teams in a shared environment to deploy per namespace and allowing them to manage alerting as they see fit!
+This tool directly integrates with the Kubernetes API to look up the actual real state of resources and their changes. That means where metrics based systems are good for looking up a snapshot of status based on specifications (X number of pods running right now), k8eraid can look up the current status as well as see if the status has recently changed by looking at the timestamps for API metadata like deletion times and pod state readiness times. Additionally, the configuration for k8eraid is simple enough that it is easy to expand or remove alerting and monitoring as you see fit.  Not only that but k8eraid is incredibly lightweight, using about 100KB of memory at runtime to look up the status of 100 individual resources, making it a prime, lightweight candidate for allowing multiple teams in a shared environment to deploy per-namespace and allowing them to manage alerting as they see fit!
 
 ## How does it work?
 
-- Create a json file specifying what resources you want to monitor, and how you want to alert.
+- Create a JSON file specifying what resources you want to monitor, and how you want to alert.
 - Make the config into a configmap.
-- Make an appropriate role with permissions for k8eraid to read all resources in the Apps and Core apis.
+- Make an appropriate role with permissions for k8eraid to read all resources in the Apps and Core APIs.
 - Deploy it to your cluster with k8eraid.
 - Get annoyed at the fact that you now get alerts when things go wrong in your cluster.
 
-## What kubernetes versions are supported?
+## Which Kubernetes versions are supported?
 
 Kubernetes version | Works
 -------------------|------
@@ -32,7 +32,7 @@ Kubernetes version | Works
 
 Resource    | Statuses
 ----------- | -------------------
-Pods	    | Minimum pod count, Pod restarts, Failed scheduling, Stuck terminating
+Pods	    | Minimum pod count, pod restarts, Failed scheduling, Stuck terminating
 Deployments | Minimum replica count
 Daemonsets  | Minimum replica count, Failed scheduling
 Nodes       | Out of disk, Memory pressure, Disk pressure, Node readiness, Node count
@@ -48,15 +48,22 @@ smtp	    | Mail server, Port, Password ENV var, Subject, From address, To addres
 pagerdutyV2 | Service key ENV var, Proxy server, Subject
 webhook     | Server, Proxy server, Subject
 
+## Get it from [DockerHub](https://hub.docker.com/r/bloomberg/k8eraid):
+
+```sh
+# get from DockerHub
+docker pull bloomberg/k8eraid
+```
+
 ## Awesome! So how does configuration work?
 
 There are five types of objects in a config- "deployments", "pods", "daemonsets", "nodes", and "alerters". Each of these objects contain one or more desired definitions. There are a few important rules that you will need to remember when configuring your rules, most of these are due to the way the kubernetes client functions in `list` vs `get` functions.
 
 - The config is self-reloading. You do not need to redeploy k8eraid when you update the configmap.
-- If using a wildcard for a POD, you MUST specify a valid filterLabel
-- If specifying a name for any target resource, you MUST specify a valid filterNamespace
+- If using a wildcard for a POD, you MUST specify a valid filterLabel.
+- If specifying a name for any target resource, you MUST specify a valid filterNamespace.
 - If your pendingThreshold is too short for a POD rule, you may get alerts for normal pod startups.
-- For DEPLOYMENT and DAEMONSET type resources- "filter" can either be a literal string for a namespace, or a key/value pair string for a metadata label
+- For DEPLOYMENT and DAEMONSET type resources- "filter" can either be a literal string for a namespace, or a key/value pair string for a metadata label.
 
 ### Pod configuration examples
 
@@ -228,18 +235,18 @@ Got features or bugfixes? please feel free to contribute with code or issues!
 - Emacs [`go-mode.el`](https://github.com/dominikh/go-mode.el)
 - VSCode [`vscode-go`](https://github.com/Microsoft/vscode-go)
 
-### Building binary with valid go environment
+### Building binary with valid Golang environment
 
 `make build`
 
-### Building binary with valid docker installation
+### Building binary with valid Docker installation
 
 `make buildcontainer`
 
-### Testing code with a valid docker installation
+### Testing code with a valid Docker installation
 
 `make testcontainer`
 
-### Building a docker container
+### Building a Docker container
 
 `make container`
