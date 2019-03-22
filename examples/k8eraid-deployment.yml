@@ -26,7 +26,7 @@ spec:
       containers:
         - name: k8eraid
           command: ['/k8eraid']
-          image: bloomberg/k8eraid:0.8.1
+          image: bloomberg/k8eraid:v0.8.1
           imagePullPolicy: Always
           env:
           - name: POLL_PERIOD
