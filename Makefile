@@ -41,6 +41,8 @@ $(DEP):
 vendor: $(DEP)
 	$(PROXY_VARS) $(DEP) ensure
 
+build: build/k8eraid
+
 build/k8eraid: clean vendor
 	GOARCH=$(ARCH) go build -o build/k8eraid $(PACKAGE)/cmd/k8eraid
 
