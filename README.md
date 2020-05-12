@@ -27,6 +27,10 @@ Kubernetes version | Works
 1.7.X              | :white_check_mark:
 1.9.X              | :white_check_mark:
 1.10.X             | :white_check_mark:
+1.11.X             | :white_check_mark:
+1.12.X             | :white_check_mark:
+1.13.X             | :white_check_mark:
+1.14.X             | :white_check_mark:
 
 ## What does k8eraid monitor?
 
